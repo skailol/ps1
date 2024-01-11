@@ -1,9 +1,10 @@
-$endTime = (Get-Date).AddSeconds(5)
-
-while (Get-Date -lt $endTime) {
-    Start-Process notepad.exe -NoNewWindow
-    Start-Sleep -Milliseconds 200  # Adjust this delay if needed
+# Run Start-Process cmd.exe 10 times quickly
+for ($i = 1; $i -le 10; $i++) {
+    Start-Process cmd.exe
 }
 
-# Close all Notepad processes
-Get-Process -Name notepad | ForEach-Object { $_.CloseMainWindow() | Out-Null; $_.WaitForExit() }
+# Wait for 3 seconds
+Start-Sleep -Seconds 3
+
+# Close all Command Prompt instances
+Get-Process -Name cmd | ForEach-Object { Stop-Process -Id $_.Id -Force }
