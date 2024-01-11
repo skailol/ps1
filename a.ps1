@@ -1,10 +1,12 @@
-# Run Start-Process cmd.exe 10 times quickly
-for ($i = 1; $i -le 10; $i++) {
-    Start-Process cmd.exe
+while ($true) {
+    # Check for closed Command Prompt instances
+    $closedCmd = Get-Process -Name cmd -ErrorAction SilentlyContinue
+
+    # If no Command Prompt found, open a new one
+    if (-not $closedCmd) {
+        Start-Process cmd.exe
+    }
+
+    # Check every second (adjust as needed)
+    Start-Sleep -Seconds 1
 }
-
-# Wait for 3 seconds
-Start-Sleep -Seconds 3
-
-# Close all Command Prompt instances
-Get-Process -Name cmd | ForEach-Object { Stop-Process -Id $_.Id -Force }
